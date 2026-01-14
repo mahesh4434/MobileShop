@@ -50,3 +50,94 @@ d) Component Routing
 
 
 ase kelya vr to jato router kade ani tya madhe jo route asel to bghto otherwise default route konta he to bghto ani tyacha component anto 
+
+----------------------------------------------------------------------------
+
+Now We are going to create Web API 
+
+-----------------------------------------------------------------------------
+1) How we can create a connection with Database 
+
+
+      SqlConnection connection = new SqlConnection
+      {
+        ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=techDb;"
+      };
+
+      SqlCommand command = new SqlCommand
+      {
+        CommandText = "" , --- Ithe producre name yete 
+        CommandType = System.Data.CommandType.StoredProcedure , -----  He tumhlala sangte kontya type chi command ahe te (insert update dleete procude ase ) 
+		 Connection = connection  -- ith query fire karnya stahi connection provide kakrayche aste 
+      };
+
+
+ Tatr ata aplya excute krnya stahi connection 1) open 2) execute and 3) close 
+ Ya 3 gosti karavya lagtat so tya sathi 
+ 
+  connection.Open();    -- connection open krte 
+ command.ExecuteNonQuery(); --- vr command madhe je ky logic ahe query che te execute karel 
+
+ connection.Close(); --- Kaam jhalya vr connection close karel.
+ 
+ return Ok("Inventory data saved successfully.");
+ 
+
+ --------------------------------------------------------
+ 
+1) Query Execution in Dot net 
+
+create table Inventory(
+  Id int Identity(1,1) primary key,
+  ProductId int ,
+  ProductName varchar(100),
+  StockAvailable int,
+  ReorderStock int
+)
+
+Here The 
+This SQL code snippet is a Data Definition Language (DDL) statement used to 
+create a structured table named Inventory within a database. It defines how data regarding product stock levels will be stored and managed.
+
+Identity(1,1)  ---- The unique identifier for each row. It starts at 1 and increases by 1 for every new record automatically.Identity(1,1): This is specific to SQL Server (T-SQL). It means the database handles the ID generation for you. 
+You don’t need to provide a value for Id when inserting new data; the system will handle it ($1, 2, 3...$).
+
+
+primary key    ---- Ensures this column is unique and not null, making it the main reference point for each row.This is the most important constraint. 
+It prevents duplicate rows and allows the database to retrieve data much faster via indexing.
+
+
+
+
+---------------------------------------------------------------------------------
+
+How to create an procudure 
+
+open database ------  then click on programitibility ----- Then Right click on procudures and click on create stored procudre -- you SP get creted
+
+
+---------------------------------------------------------------------------------
+
+How to refresh chace in datavase 
+
+press Ctrl + Shift + R.
+
+This refreshes the IntelliSense cache. The red lines should disappear, allowing you to run your code without visual errors.
+________________________________________________________________________________________________
+
+#region 
+
+is used for code readability
+
+Helps collapse/expand code sections in Visual Studio
+
+⚠️ It has no effect at runtime
+It’s only for developer convenience
+
+_____________________________________________________________________________________________________
+      command.Parameters.AddWithValue("@ProductId", inventoryDto.ProductId);
+	  
+	  @ProductId ha database chya producre cha varibale ki jyala method cchya para madhe yenarya DTO chya ProductId Barobr match kela jatoy
+	  
+_____________________________________________________________________________________________________
+	  

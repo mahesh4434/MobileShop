@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\mahes\\OneDrive\\Desktop\\MobileShop\\Backend\\TechApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0A6D92FF-49ED-40E5-B7F3-CE5F651834AA}|TechApi\\TechApi.csproj|c:\\users\\mahes\\onedrive\\desktop\\mobileshop\\backend\\techapi\\techapi\\controllers\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0A6D92FF-49ED-40E5-B7F3-CE5F651834AA}|TechApi\\TechApi.csproj|solutionrelative:techapi\\controllers\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1A23DE6B-BA85-7D30-8C9D-180EAA622D1C}|TechApi\\TechApi.csproj|c:\\users\\mahes\\onedrive\\desktop\\mobileshop\\backend\\techapi\\techapi\\controllers\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A23DE6B-BA85-7D30-8C9D-180EAA622D1C}|TechApi\\TechApi.csproj|solutionrelative:techapi\\controllers\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A23DE6B-BA85-7D30-8C9D-180EAA622D1C}|TechApi\\TechApi.csproj|c:\\users\\mahes\\onedrive\\desktop\\mobileshop\\backend\\techapi\\techapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A23DE6B-BA85-7D30-8C9D-180EAA622D1C}|TechApi\\TechApi.csproj|solutionrelative:techapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -24,9 +28,22 @@
               "RelativeDocumentMoniker": "TechApi\\Controllers\\InventoryController.cs",
               "ToolTip": "C:\\Users\\mahes\\OneDrive\\Desktop\\MobileShop\\Backend\\TechApi\\TechApi\\Controllers\\InventoryController.cs",
               "RelativeToolTip": "TechApi\\Controllers\\InventoryController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAASwCEAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-14T10:51:14.969Z",
+              "WhenOpened": "2026-01-14T18:24:10.811Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\mahes\\OneDrive\\Desktop\\MobileShop\\Backend\\TechApi\\TechApi\\Program.cs",
+              "RelativeDocumentMoniker": "TechApi\\Program.cs",
+              "ToolTip": "C:\\Users\\mahes\\OneDrive\\Desktop\\MobileShop\\Backend\\TechApi\\TechApi\\Program.cs",
+              "RelativeToolTip": "TechApi\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T17:21:44.149Z",
               "EditorCaption": ""
             }
           ]
