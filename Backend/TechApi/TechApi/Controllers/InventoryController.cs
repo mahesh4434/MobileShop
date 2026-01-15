@@ -13,7 +13,7 @@
           public ActionResult SaveInventoryData(Inventory inventoryDto) {
         SqlConnection connection = new SqlConnection
         {
-          ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=techDb;"
+          ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=techDb;Trusted_Connection=True;MultipleActiveResultSets=true;"
         };
 
         SqlCommand command = new SqlCommand

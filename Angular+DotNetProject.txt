@@ -75,6 +75,8 @@ Now We are going to create Web API
  Tatr ata aplya excute krnya stahi connection 1) open 2) execute and 3) close 
  Ya 3 gosti karavya lagtat so tya sathi 
  
+   command.Parameters.AddWithValue("@ProductId", inventoryDto.ProductId);-------------------- @ProductId ha database chya producre cha varibale ki jyala method cchya para madhe yenarya DTO chya ProductId Barobr match kela jatoy
+
   connection.Open();    -- connection open krte 
  command.ExecuteNonQuery(); --- vr command madhe je ky logic ahe query che te execute karel 
 
@@ -141,3 +143,177 @@ ________________________________________________________________________________
 	  
 _____________________________________________________________________________________________________
 	  
+	  Now How we can connect with frontent ot back end 
+	  
+	 1) 1st just Open you invertory.ts file and write below code for routing 
+	 
+	 
+	 
+	 CODE---->>
+	 
+	 export class Inventory {
+
+  httpClient = inject(HttpClient);
+
+  inventoryData = {
+    productId: '',
+    productName: '',
+    stockAvailable: 0,
+    reorderStock: 0
+  };
+
+  onSubmit() {
+    let apiUrl = 'https://localhost:7273/api/inventory';
+    let httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Mahesh-auth-token',
+        'Content-Type': 'application/json'
+      })
+    };
+    this.httpClient.post(apiUrl, this.inventoryData, httpOptions).subscribe(
+
+      {
+        next: v => console.log('Inventory data submitted successfully', v),
+        error: e => console.error('Error submitting inventory data', e),
+        complete: () => {
+          alert('Inventory data submission process completed.' + JSON.stringify(this.inventoryData));
+        }
+      }
+    );
+  }
+}
+
+Now under stand the code ;ine by line 
+
+1) 1export class Inventory {
+
+							Defines a TypeScript class named Inventory
+							export → allows this class to be used in other files
+							This class is typically used as:
+							an Angular component
+							or service logic handling inventory data
+							
+2) httpClient = inject(HttpClient);
+
+							🔍 What is happening?
+							Angular Dependency Injection
+							HttpClient is Angular’s built-in service for making HTTP calls (GET, POST, PUT, DELETE)
+							💡 Why inject()?
+							This is Angular 14+ syntax
+							Alternative to constructor injection
+
+3) inventoryData = { ... } 
+   inventoryData = {
+  productId: '',
+  productName: '',
+  stockAvailable: 0,
+  reorderStock: 0
+};							🔍 Purpose
+							Holds form data
+							Bound to input fields using ngModel or reactive forms
+							This object will be sent to the backend API							
+							
+4) onSubmit() {
+
+				This function is triggered when:
+				a form is submitted
+				or a Submit button is clicked							
+	
+	HTML Will be look like -- <button (click)="onSubmit()">Submit</button>
+
+5) let apiUrl = 'https://localhost:7273/api/inventory';
+															🔍 What is this?
+															Backend ASP.NET Core Web API endpoint
+															Your Angular app sends data to this URL
+												
+		Mhnje Backend la ase mapp kele jail-- 
+		                                   [HttpPost]
+                                           [Route("api/inventory")]
+                                           public IActionResult AddInventory(Inventory model) { }
+
+6) let httpOptions = { headers: new HttpHeaders({ ... }) }
+											🔍 Purpose
+											Adds HTTP headers to the request	
+											
+headers: new HttpHeaders({
+  Authorization: 'Mahesh-auth-token',
+  'Content-Type': 'application/json'
+})
+📌 Explanation of headers:
+Header	Purpose
+1) Authorization	Used for authentication (JWT / token)
+2) Content-Type	Tells server that request body is JSON	
+
+
+7) this.httpClient.post(...)
+
+ this.httpClient.post(apiUrl, this.inventoryData, httpOptions)
+
+🔍 What happens?
+
+Sends an HTTP POST request
+Data sent:
+URL → apiUrl
+Body → inventoryData
+Headers → httpOptions
+
+Raw Http -- 
+
+POST /api/inventory
+Content-Type: application/json
+
+{
+  "productId": "...",
+  "productName": "...",
+  "stockAvailable": 10,
+  "reorderStock": 5
+}
+
+
+8) .subscribe({ ... })
+
+🔍 Why subscribe()?
+HTTP calls are asynchronous
+subscribe() listens for the response
+
+9) next: v => console.log(...)
+
+next: v => console.log('Inventory data submitted successfully', v)
+
+Called when API returns success (200/201)
+v contains:
+response from backend
+Logs success message to console.
+
+10)error: e => console.error(...) 
+error: e => console.error('Error submitting inventory data', e)
+Called when:
+API fails (400, 401, 500)
+Network error
+Logs error details to console
+
+11) complete: () => { ... }
+complete: () => {
+  alert('Inventory data submission process completed.' + JSON.stringify(this.inventoryData));
+}
+
+🔍 When is this called?
+After next OR error
+Signals request lifecycle completion
+⚠️ Important Note:
+complete() does NOT mean success, it only means:
+request finished
+Better practice:
+Show success alert in next
+
+🔁 Flow Summary
+
+1) User fills form
+2) Clicks Submit
+3) onSubmit() is triggered
+4) POST request sent to backend
+5) Backend processes data
+6) Angular handles:
+    A) next → success
+    B) error → failure
+    C) complete → request finished
