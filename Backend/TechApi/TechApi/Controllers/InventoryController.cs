@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using System.Data;
 using System.Text.Json.Serialization;
 using TechApi.Models;
 
@@ -68,7 +69,46 @@ using TechApi.Models;
           return Ok(reponse);
       }
 
+        [HttpDelete]
+        public ActionResult DeleteInventoryData(int ProductId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(
+                    "Server=(localdb)\\MSSQLLocalDB;Database=techDb;Trusted_Connection=True;MultipleActiveResultSets=true;"))
+                {
+                    using (SqlCommand command = new SqlCommand("sp_DeleteInventoryDetails", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@ProductId", ProductId);
+
+                        connection.Open();
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        // If no rows were deleted
+                        if (rowsAffected == 0)
+                        {
+                            return NotFound($"No inventory record found with ProductId = {ProductId}");
+                        }
+                    }
+                }
+
+                return Ok("Inventory data deleted successfully.");
+            }
+            catch (SqlException ex)
+            {
+                // SQL related errors (DB down, SP error, constraint issues)
+                return StatusCode(500, $"Database error occurred: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Any other unexpected error
+                return StatusCode(500, $"Unexpected error occurred: {ex.Message}");
+            }
+        }
 
 
-  }
+
+    }
 }
