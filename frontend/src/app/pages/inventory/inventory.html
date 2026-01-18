@@ -1,0 +1,66 @@
+<div class="row mx-3">
+    <h2>Inventory</h2>
+    <hr>
+</div>
+
+<form>
+    <div class="row mx-5 g-3">
+        <div class="col">
+            <label for="ProductId">Product Id</label>
+            <input type="number" name="productId" [(ngModel)]="inventoryData.productId" class="form-control"
+                placeholder="Product Id">
+        </div>
+        <div class="col">
+            <label for="ProductName">Product Name</label>
+            <input type="text" name="productName" [(ngModel)]="inventoryData.productName" class="form-control"
+                placeholder="Product Name">
+        </div>
+        <div class="col">
+            <label for="StockAvailable">Stock Available</label>
+            <input type="number" name="stockAvailable" [(ngModel)]="inventoryData.stockAvailable" class="form-control"
+                placeholder="Stock Available">
+        </div>
+        <div class="col">
+            <label for="ReorderStock">Reorder Stock</label>
+            <input type="number" name="reorderStock" [(ngModel)]="inventoryData.reorderStock" class="form-control"
+                placeholder="Reorder Stock">
+        </div>
+    </div>
+
+    <div class="row mx-1 mt-3">
+        <div class="col-lg-3">
+            <button type="button" (click)="onSubmit()" class="btn btn-primary mx-5 mt-3">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+<div class="mt-5 mx-3">
+    <h3>Inventory Details</h3>
+</div>
+
+<div class="col-lg-12">
+    <table class="table table-hover mt-3 mx-3">
+        <thead>
+            <tr>
+                <th scope="col">ProductId</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Stock Available</th>
+                <th scope="col">Reorder Stock</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of inventoryDto; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ item.productName }}</td>
+                <td>{{ item.stockAvailable }}</td>
+                <td>{{ item.reorderStock }}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary">Edit</button>
+                    <button class="btn btn-sm btn-danger ms-2">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
