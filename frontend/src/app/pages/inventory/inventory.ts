@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Add this
+import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 
 export interface InventoryDto {
   productId: number;
@@ -12,58 +12,79 @@ export interface InventoryDto {
 
 @Component({
   selector: 'app-inventory',
-  standalone: true, // Ensure standalone is true if using imports here
-  imports: [FormsModule, CommonModule], // Add FormsModule here
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './inventory.html',
   styleUrl: './inventory.css',
 })
-export class Inventory {
-
+export class Inventory implements OnInit {
   httpClient = inject(HttpClient);
   inventoryDto: InventoryDto[] = [];
+  isSubmitting: boolean = false;
 
+  // Initializing with null or empty strings to trigger 'required' validation
   inventoryData = {
-    productId: 0,
+    productId: null as any,
     productName: '',
-    stockAvailable: 0,
-    reorderStock: 0
+    stockAvailable: null as any,
+    reorderStock: null as any
   };
 
-  ngOnInit(): void {
-    const apiUrl = 'https://localhost:7273/api/inventory';
+  private apiUrl = 'https://localhost:7273/api/inventory';
 
+  ngOnInit(): void {
+    this.getInventoryData();
+  }
+
+  getInventoryData(): void {
     this.httpClient
-      .get<InventoryDto[]>(apiUrl)
+      .get<InventoryDto[]>(this.apiUrl)
       .subscribe({
-        next: (data: InventoryDto[]) => {
+        next: (data) => {
           this.inventoryDto = data;
-          console.log('Inventory data fetched successfully', data);
         },
-        error: (err) => {
-          console.error('Error fetching inventory data', err);
-        }
+        error: (err) => console.error('Fetch error', err)
       });
   }
 
+  // Acceptance of the 'form' argument fixes the TS2554 error
+  onSubmit(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
 
-  onSubmit() {
-    debugger;
-    let apiUrl = 'https://localhost:7273/api/inventory';
-    let httpOptions = {
+    this.isSubmitting = true;
+
+    const httpOptions = {
       headers: new HttpHeaders({
-        Authorization: 'Mahesh-auth-token',
+        'Authorization': 'Mahesh-auth-token',
         'Content-Type': 'application/json'
       })
     };
-    this.httpClient.post(apiUrl, this.inventoryData, httpOptions).subscribe(
 
-      {
-        next: v => console.log('Inventory data submitted successfully', v),
-        error: e => console.error('Error submitting inventory data', e),
-        complete: () => {
-          alert('Inventory data submission process completed.' + JSON.stringify(this.inventoryData));
-        }
+    this.httpClient.post(this.apiUrl, this.inventoryData, httpOptions).subscribe({
+      next: (v) => {
+        this.getInventoryData();
+      },
+      error: (e) => {
+        console.error('Submission error', e);
+        this.isSubmitting = false;
+      },
+      complete: () => {
+        alert('Data submitted successfully!');
+        this.isSubmitting = false;
+        this.resetForm(form);
       }
-    );
+    });
+  }
+
+  resetForm(form: NgForm) {
+    form.resetForm(); // Clears validation state and reset inputs
+    this.inventoryData = {
+      productId: null as any,
+      productName: '',
+      stockAvailable: null as any,
+      reorderStock: null as any
+    };
   }
 }
